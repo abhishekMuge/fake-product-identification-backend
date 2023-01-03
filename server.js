@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+
 require("dotenv").config();
 require("./config");
 var cors = require("cors");
@@ -17,13 +18,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
 
-const { registerUser, loginUser } = require("./userController");
+const userRouter  = require('./routes/userRoutes');
 
-const register = router.post("/register", registerUser);
-const login = router.post("/login", loginUser);
-
-app.use(register);
-app.use(login);
+app.use('/api', userRouter);
 
 app.get("/test", (req, res) => {
   res.send("Workinf!");
