@@ -1,7 +1,7 @@
 const User = require("../models/user");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt")
-const { resetWatchers } = require('nodemon/lib/monitor/watch');
+
 
 exports.registerUser = async (req, res, next) => {
   try {
@@ -49,11 +49,12 @@ exports.loginUser = async (req, res, next) => {
       return;
     } else {
       hashed_password = await bcrypt.compare(password, user.password)
+      console.log(hashed_password)
       if (
         account_address == user.account_address &&
         hashed_password
       ) {
-        console.log(token)
+        
 
         res.status(200).json({
           status: 200,
@@ -62,6 +63,12 @@ exports.loginUser = async (req, res, next) => {
             user: user,
           },
         });
+      }
+      else{
+        return res.status(400).json({
+          msg: 'wrong account address or password',
+          data: ''
+        })
       }
     }
   } catch (error) {
