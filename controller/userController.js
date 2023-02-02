@@ -57,9 +57,9 @@ exports.loginUser = async (req, res, next) => {
           },
         });
       } else {
-        return res.status(401).json({
-          msg: "Associated password doesn't match with current account address!",
-          status: 401,
+        return res.status(200).json({
+          status: 400,
+          msg: "wrong account address or password",
         });
       }
     }
